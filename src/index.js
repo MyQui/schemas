@@ -8,6 +8,8 @@ const readline = require('readline')
 const figlet = require('figlet')
 const colors = require('colors')
 const package = require('../package.json')
+const Cryptr = require('cryptr')
+const cryptr = new Cryptr('WQISTR7SDUI')
 
 function createConnection(options) {
     host = options.host
@@ -27,7 +29,9 @@ function createConnection(options) {
     deprecate old URLs: false
     safe stringify: true
     block remote: false
-    createconnection includes db parameter: false`)
+    createconnection includes db parameter: false
+    model deprecate: false
+    safe model encryption: true`)
 }
 
 function connect(){
@@ -69,6 +73,15 @@ function query(string){
         let fcol = JSON.parse(col)
     
         return fcol[key]
+    }
+
+    if (string === `SELECT VALUE FROM DATABASE ${db} WHERE KEY = ${key}, OPTIONS = encrypt: %true%`){
+        let col = fs.readFileSync(`myqui/${db}.qui`, 'utf-8')
+        let fcol = JSON.parse(col)
+    
+        let par = fcol[key]
+        const k = cryptr.encrypt(par)
+        return k
     }
 
     if (string === `EVALUATE RESULT FROM DATABASE ${db} WHERE KEY = ${key}`) {
