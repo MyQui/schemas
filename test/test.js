@@ -19,3 +19,6 @@ db.query('INSERT ON DATABASE test PARAMETERS (name, Pau) USING MODEL test')
 
 let s = db.query('SELECT VALUE FROM DATABASE test WHERE KEY = name')
 console.log(s)
+
+let ss = db.query('SELECT VALUE FROM DATABASE test WHERE KEY = name, OPTIONS = encrypt: %true%')
+console.log(ss)
