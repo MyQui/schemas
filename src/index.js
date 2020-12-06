@@ -40,9 +40,10 @@ function connect(){
     }
 }
 
-function createSchema(schemaName, schema){
+function createSchema(file, schemaName, schema){
     p = schemaName
     schematic = schema
+    fs.writeFileSync(`myqui/${file}.qui`, JSON.stringify(schema, null, 2))
 }
 
 function prepare(options){
@@ -55,8 +56,7 @@ function prepare(options){
 }
 
 function query(string){
-    if (string === `INSERT ON DATABASE ${db} PARAMETERS (${key}, ${value}) USING MODEL ${p}`){
-        console.log('inserted')
+    if (string === `INSERT ON DATABASE ${db} PARAMETERS (${key}, ${value}) USING SCHEMA ${p}`){
         let fc = JSON.stringify(schematic)
         fs.writeFileSync(`myqui/${db}.qui`, fc)
 
