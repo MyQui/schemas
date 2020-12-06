@@ -9,13 +9,13 @@ db.createConnection({
 
 db.connect()
 
-db.createSchema('test', {
+db.createSchema('test', 'test', {
     name: 'String',
     surname: 'String'
 })
 
 db.prepare({ db: 'test', key: 'name', value: 'Pau' })
-db.query('INSERT ON DATABASE test PARAMETERS (name, Pau) USING MODEL test')
+db.query('INSERT ON DATABASE test PARAMETERS (name, Pau) USING SCHEMA test')
 
 let s = db.query('SELECT VALUE FROM DATABASE test WHERE KEY = name')
 console.log(s)
